@@ -3,8 +3,11 @@
 --
 -- A parser for palindromes over the alphabet 'a' and 'b'
 
+-- In order to execute these examples, install package dependency `searchtree`
+-- by `cypm add -d searchtree`
+import Control.AllSolutions
+
 import Parser
-import AllSolutions
 
 -- Terminals:
 a = terminal 'a'
