@@ -7,6 +7,8 @@
 -- by `cypm add -d searchtree`
 import Control.AllSolutions
 
+import Prelude hiding ( (<*>), (<|>), empty )
+
 import Parser
 
 -- Terminals:

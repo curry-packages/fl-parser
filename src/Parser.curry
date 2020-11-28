@@ -6,9 +6,9 @@
 ---               In Proc. FLOPS'99, Springer LNCS 1722, pp. 85-99, 1999
 ---
 --- @author Michael Hanus
---- @version December 2012
---- @category general
+--- @version November 2020
 ------------------------------------------------------------------------------
+{-# OPTIONS_FRONTEND -Wno-incomplete-patterns #-}
 
 module Parser where
 
@@ -46,13 +46,13 @@ p <||> q = \rep -> p rep <|> q rep
 
 --- Combines two parsers (with or without representation) in a
 --- sequential manner.
-(<*>)    :: Parser t -> Parser t -> Parser t
+(<*>)    :: Data t => Parser t -> Parser t -> Parser t
 p1 <*> p2 = seq
  where seq sentence | p1 sentence =:= sent1 = p2 sent1  where sent1 free
 
 
 --- Attaches a representation to a parser without representation.
-(>>>) :: Parser token -> rep -> ParserRep rep token
+(>>>) :: Data token => Parser token -> rep -> ParserRep rep token
 parser >>> repexp = attach
   where attach rep sentence | parser sentence =:= rest &> repexp =:= rep
                             = rest              where rest free
@@ -76,13 +76,13 @@ satisfy pred sym (token:tokens) | pred token =:= True & sym=:=token = tokens
 --- A star combinator for parsers. The returned parser
 --- repeats zero or more times a parser p with representation and
 --- returns the representation of all parsers in a list.
-star :: ParserRep rep token -> ParserRep [rep] token
+star :: (Data token, Data rep) => ParserRep rep token -> ParserRep [rep] token
 star p =    p x <*> (star p) xs >>> (x:xs)
        <||> empty               >>> []         where x,xs free
 
 --- A some combinator for parsers. The returned parser
 --- repeats the argument parser (with representation) at least once.
-some :: ParserRep rep token -> ParserRep [rep] token
+some :: (Data token, Data rep) => ParserRep rep token -> ParserRep [rep] token
 some p = p x <*> (star p) xs >>> (x:xs)        where x,xs free
 
 

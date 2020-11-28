@@ -3,8 +3,10 @@
 -- We define a parser for arithmetic expressions over natural numbers.
 -- The presentation of this parser is the value of the expression.
 
+import Prelude hiding ( (<*>), some )
+import Data.Char
+
 import Parser
-import Char
 
 expression   =  term t <*> plus_minus op <*> expression e  >>> (op t e)
            <||> term
