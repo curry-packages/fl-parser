@@ -52,7 +52,7 @@ p1 <*> p2 = seq
 
 
 --- Attaches a representation to a parser without representation.
-(>>>) :: Data token => Parser token -> rep -> ParserRep rep token
+(>>>) :: (Data token, Data rep) => Parser token -> rep -> ParserRep rep token
 parser >>> repexp = attach
   where attach rep sentence | parser sentence =:= rest &> repexp =:= rep
                             = rest              where rest free
@@ -65,12 +65,12 @@ empty :: Parser _
 empty sentence = sentence
 
 --- A parser recognizing a particular terminal symbol.
-terminal :: token -> Parser token
+terminal :: Data token => token -> Parser token
 terminal sym (token:tokens) | sym=:=token = tokens
 
 --- A parser (with representation) recognizing a terminal satisfying
 --- a given predicate.
-satisfy :: (token->Bool) -> ParserRep token token
+satisfy :: Data token => (token -> Bool) -> ParserRep token token
 satisfy pred sym (token:tokens) | pred token =:= True & sym=:=token = tokens
 
 --- A star combinator for parsers. The returned parser
