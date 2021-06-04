@@ -3,9 +3,9 @@
 --
 -- A parser for palindromes over the alphabet 'a' and 'b'
 
--- In order to execute these examples, install package dependency `searchtree`
--- by `cypm add -d searchtree`
-import Control.AllSolutions
+-- In order to execute these examples, install package dependency `allvalues`
+-- by `cypm add -d allvalues`
+import Control.AllValues ( getAllSolutions )
 
 import Prelude hiding ( (<*>), (<|>), empty )
 
