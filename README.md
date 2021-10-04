@@ -12,7 +12,13 @@ The idea and structure of these combinators are adapted from:
 This paper contains a detailed description of the idea and usage
 of these parser combinators.
 
-The `examples` directory contains some examples for using
+The `examples` directory contains examples for using
 these combinators for parsing.
+
+* `Palindrome.curry`:
+  a parser for palindromes over the alphabet 'a' and 'b'
+  showing also the possibility to generate correct sentences
+  with functional logic parsers
+* `ExprParser.curry`: a parser for arithmetic expressions over natural numbers
 
 --------------------------------------------------------------------------
