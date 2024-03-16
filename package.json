@@ -11,7 +11,7 @@
     "license": "BSD-3-Clause",
     "licenseFile": "LICENSE",
     "source": {
-        "git": "https://git.ps.informatik.uni-kiel.de/curry-packages/fl-parser.git",
+        "git": "https://github.com/curry-packages/fl-parser.git",
         "tag": "$version"
     }
 }
