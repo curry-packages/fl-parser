@@ -8,23 +8,19 @@ import Data.Char
 
 import Parser
 
-expression   =  term t <*> plus_minus op <*> expression e  >>> (op t e)
+expression   =  term t <*> terminal '+' <*> expression e  >>> (t + e)
+           <||> term t <*> terminal '-' <*> expression e  >>> (t - e)
            <||> term
- where op,t,e free
+ where t,e free
 
-term         =  factor f <*> prod_div op <*> term t        >>> (op f t)
+term         =  factor f <*> terminal '*' <*> term t      >>> (f * t)
+           <||> factor f <*> terminal '/' <*> term t      >>> (f `div` t)
            <||> factor
- where op,f,t free
+ where f,t free
 
 factor       =  terminal '(' <*> expression e <*> terminal ')'  >>> e
            <||> num
  where e free
-
-plus_minus   =  terminal '+'  >>> (+)
-           <||> terminal '-'  >>> (-)
-
-prod_div     =  terminal '*'  >>> (*)
-           <||> terminal '/'  >>> div
 
 num = some digit l >>> numeric_value l
   where l free
@@ -33,4 +29,7 @@ num = some digit l >>> numeric_value l
 digit = satisfy isDigit
 
 
--- example application: expression val "(10+5*2)/4" =:= [] where val free
+-- Example:
+ex1 :: Int
+ex1 | expression val "(10+5*2)/4" =:= []
+    = val                                       where val free
